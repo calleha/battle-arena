@@ -14,6 +14,6 @@ public class Warrior extends Character {
     }
 
     @Override public double defenseBuff(Character defender) {
-	defender.setDamageMultiplier(getDamageMultiplier() * 0.85);
+	defender.setDamageMultiplier(defender.getDamageMultiplier() * 0.85);
     }
 }
