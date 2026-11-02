@@ -3,8 +3,9 @@ This is simple turn-based battle game between the player and the computer, for a
 
 Below is a todo-list of features to be added.
 
-* TODO Write game logic to a BattleService.java and make the program able to run
-* TODO Write unit tests for methods
-* TODO Add color output
-* TODO Add sound effects
-* TODO Add license
+** TODO Write game logic to a BattleService.java and make the program able to run
+** TODO Write user menu to Main.java
+** TODO Write unit tests for methods
+** TODO Add color output
+** TODO Add sound effects
+** TODO Add license
