@@ -10,8 +10,8 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>JUnit Test Project</name>
-    <description>An environment for testing JUnit</description>
+    <name>Battle Arena</name>
+    <description>Turn-based battle game</description>
 
     <properties>
         <!-- Java version -->
