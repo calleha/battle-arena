@@ -9,3 +9,28 @@ Below is a todo-list of features to be added.
 ** TODO Add color output
 ** TODO Add sound effects
 ** TODO Add license
+
+
+* Plan
+
+Klasser:
+
+** Main
+
+** Character
+*** Mage
+*** Warrior
+*** Titan
+
+** Interface: SkillTypes
+
+** Enum: ActionType
+
+** GameHandler
+
+** Result
+
+** SaveHandler
+
+** Server
+*** Client
