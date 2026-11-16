@@ -28,7 +28,7 @@ Klasser:
 
 ** GameHandler
 
-** Result
+** ResultHandler
 
 ** SaveHandler
 
