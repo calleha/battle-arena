@@ -3,95 +3,77 @@ import java.util.Scanner;
 
 public class Game {
 
-    private Character player;
-    private Character opponent;
-    private boolean playerTurn;
+    private GameCharacter player;
+    private GameCharacter computer;
+    private boolean isPlayerTurn;
     private int roundCount;
-    private boolean isRunning;
-    Random rand = new Random();
-    Scanner input = new Scanner(System.in);
+    //private boolean isRunning;
+    private Scanner input;
+    Random random = new Random();
+    
+    public Game(GameCharacter player, GameCharacter computer, Scanner input) {
+	this.player = player;
+	this.computer = computer;
+	//this.isRunning = false;
+	this.input = input;
+    }
 
 
     public void start() {
-        if(GetInitialStartingTurn() == 1){
-            playerTurn();
-        }else if(GetInitialStartingTurn() == 2){
-            computerTurn();
-        }else{
-            System.out.println("An error has occured");
-        }
+        playerTurn = random.nextBoolean();
+	roundCount = 1;
         gameLoop();
     }
 
     public void gameLoop() {
-        while (player.isAlive() && opponent.isAlive()) {
-            // kolla runda, hp, vems tur det är
-            // kalla på relevanta metoder, etc.
-
-            // möjliga val är: attack, heal,
-	    // magicattack (mage only), buff (titan only), debuff (warrior only)
-	    //
-            // datorn attackerar, ge status, vad hände? Har datorn och spelarna fortfarande hp?
-            //
-
-            if(getPlayerTurn() == true){
-
-                playerTurn();
-            }else if(getPlayerTurn() == false){
-                computerTurn();
-            }else{
-                System.out.println("An error has occured");
-            }
-        }
-
+        while (player.isAlive() && computer.isAlive()) {
+            if (isPlayerTurn) playerTurn(); else computerTurn();
+	    playerTurn = !playerTurn;
+	    roundCount++;
+	}
+	System.out.println(getWinner().getPlayerName() + " wins!");
     }
 
     public void playerTurn() {
-        // TODO: Hantera spelarens tur
-        System.out.println("You current HP is:" + player.getHp() + "\nChoose your action:\n1. Attack\n2. Heal\n3. Special");
+        System.out.println("Your HP:" + player.getHp() + "| Computer HP: " + computer.getHp() + "\nChoose your action:\n1. Attack\n2. Heal\n3. Special");
         String action = input.nextLine();
 
-        if(action.equals("attack")){
-            player.basicAttack(opponent);
-        }else if(action.equals("heal")){
-	    player.heal(player);
-	}else if(action.equals("special")){
-            player.specialMove(player, opponent);
-            computerTurn();
-        }
+	switch (action) {
+	    case "2" -> player.heal(player);
+	    case "3" -> player.specialMove(player, computer);
+	    default  -> player.basicAttack(player, computer);
+	}
     }
 
     public void computerTurn() {
-        // TODO: Hantera datorns tur
-
-        int computerChoice = rand.nextInt(2); // Ger 1, 2 eller 3
+        int computerChoice = random.nextInt(3);
 
         if (computerChoice == 0) {
-            opponent.attack(player);
+            computer.basicAttack(computer, player);
 	} else if (computerChoice == 1) {
-	    opponent.heal(opponent);
+	    computer.heal(computer);
         } else if (computerChoice == 2) {
-            opponent.specialMove(opponent, player);
+            computer.specialMove(computer, player);
         } else {
             System.out.println("An error has occured");
         }
     }
 
     public boolean isGameOver() {
-        return false;
+        return !player.isAlive() || !computer.isAlive();
     }
 
-    public Character getWinner() {
-        return null;
+    public GameCharacter getWinner() {
+        return player.isAlive() ? player : computer;
     }
 
-    private int GetInitialStartingTurn() {
-        int turn = rand.nextInt(2);
-        return turn;
-    }
+    //private int GetInitialStartingTurn() {
+    //    int turn = random.nextInt(2);
+    //    return turn;
+    //}
 
-    private boolean getPlayerTurn() {
-        return playerTurn;
+    private boolean getIsPlayerTurn() {
+        return isPlayerTurn;
     }
 
 }

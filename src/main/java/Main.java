@@ -1,45 +1,45 @@
 import java.util.Scanner;
-
-static Scanner scanner = new Scanner(System.in);
+import java.util.Random;
 
 public class Main {
+    private static final Scanner scanner = new Scanner(System.in);
+    private static Random random = new Random();
+    
     public static void main(String[] args) {
 
 	initialisePlayer();
-	startGame();
-	printResult();
-	saveResult();
-	rematchOrQuit();
+
+	do {
+	    choosePlayerCharacter();
+	    initialiseGame();
+	    //printResult(); // TODO: Track score between games
+	    //saveResult();  // TODO: Append score to file
+	    System.out.print("Begin new game? (Y/n) ");
+	} while (!scanner.nextLine().equalsIgnoreCase("n"));
+    }
+
 	
+    public static void initialisePlayer() {
+	System.out.print("Write the name of your character: ");
+	String name = scanner.nextLine();
+    }
 
+    public static void choosePlayerCharacter() {
+	System.out.println("Choose your character: WARRIOR (default) | MAGE | TITAN");
+	String type = scanner.nextLine();
+	GameCharacter player = GameHandler.create(type, name);
+    }
 
-	
-	void initialisePlayer() {
-	    System.out.print("Write the name of your character: ");
-	    setPlayerName(scanner.nextLine());
-	    selectPlayerCharacter();
-	}
+    public static void initialiseGame() {
+	GameCharacter computer = GameHandler.create(computerChoice(), "Computer");
+	Game game = new Game(player, computer, scanner);
+	game.start();
+    }
 
-	void selectPlayerCharacter() {
-	    System.out.print("Choose your character: WARRIOR | TITAN | MAGE");
-	    setCharacterType(scanner.nextLine());
-	    selectCharacter(getPlayerName());
-	}
-
-	void selectCharacter(String player) {
-	    if (getCharacterType().equalsIgnoreCase("MAGE")) {Mage player = new Mage(player, 90, 90, 90, 90, 5, 15);}
-	    if (getCharacterType().equalsIgnoreCase("TITAN")) {Titan player = new Titan(player, 140, 140, 40, 40, 5, 20);}
-	    else {Warrior player = new Warrior(player, 120, 120, 60, 60, 8, 18);}
-	}
-
-	void rematchOrQuit() {
-	    while (true) {
-		System.out.print("Begin new game? (Y/n) ");
-		String newGame = scanner.nextLine();
-
-		if (newGame.equalsIgnoreCase("n")) {return;}
-		else {selectPlayerCharacter(); startGame();}
-	    }
-	}
+    public static String computerChoice() {
+	int computerChoice = random.nextInt(3);
+	if (computerChoice == 0) { return "WARRIOR"; }
+	if (computerChoice == 1) { return "MAGE"; }
+	if (computerChoice == 2) { return "TITAN"; }
     }
 }

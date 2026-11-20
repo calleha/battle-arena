@@ -1,23 +1,20 @@
-public class Mage extends Character {
+public class Mage extends GameCharacter {
     public Mage(String player, int hp, int maxHp, int mp, int maxMp, int minDamage, int maxDamage) {
 	super(player, hp, maxHp, mp, maxMp, minDamage, maxDamage);
     }
 
-    @Override public void magicAttack(Character user, Character target) {
+    private void magicAttack(GameCharacter user, GameCharacter target) {
 	if (user.getMp() >= 15) {
-	    target.setHp(getHp() - (user.getMaxDamage() + 4));
-	    user.setMp(getMp() - 15);
+	    int damage = user.getMaxDamage() + 4;
+	    target.setHp(target.getHp() - damage);
+	    user.setMp(user.getMp() - 15);
+	    System.out.println(user.getPlayerName() + " hits for " + damage + " damage!");
 	}
-	else {System.out.println("Nothing happened.");}
+	else {System.out.println("Not enough MP!");}
     }
 
-    @Override public void heal(Character user) {
-	if (user.getMp() >= 25) {
-	    user.setHp(getHp() + 30);
-	    user.setMp(getMp() - 25);
-	}
-    }
+    @Override public void heal(GameCharacter user) { healWithCost(user, 25, 30); }
 
     @Override
-    public void specialMove(Character user, Character target) {magicAttack(user, target);}
+    public void specialMove(GameCharacter user, GameCharacter target) { magicAttack(user, target); }
 }
