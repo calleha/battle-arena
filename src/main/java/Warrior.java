@@ -1,19 +1,24 @@
 public class Warrior extends Character {
-    public Warrior(String characterType, int hp, int mp) {
-	super(characterType, hp, mp);
+    public Warrior(String player, int hp, int maxHp, int mp, int maxMp, int minDamage, int maxDamage) {
+	super(player, hp, maxHp, mp, maxMp, minDamage, maxDamage);
     }
 
-    @Override public int basicAttack(Character attacker, Character defender) {
-	setDamage(10 * getDamageMultiplier());
-	defender.setHp(getHp() - getDamage());
+    @Override public void attackDebuff(Character user, Character target) {
+	if (user.getMp() >= 20) {
+	    target.setMaxDamage(target.getMaxDamage() - 3);
+	    user.setMp(user.getMp() - 20);
+	    System.out.println(target + "'s max damage decreased by 3!");
+	}
+	else {System.out.println("Nothing happened.");}
     }
 
-    @Override public int strongAttack(Character attacker, Character defender) {
-	setDamage(35);
-	attacker.setHp(getHp() - 10);
+    @Override public void heal(Character user) {
+	if (user.getMp() >= 40) {
+	    user.setHp(getHp() + 30);
+	    user.setMp(getMp() - 40);
+	}
     }
 
-    @Override public double defenseBuff(Character defender) {
-	defender.setDamageMultiplier(defender.getDamageMultiplier() * 0.85);
-    }
+    @Override
+    public void specialMove(Character user, Character target) {attackBuff(user, target);}
 }

@@ -27,9 +27,9 @@ public class Main {
 	}
 
 	void selectCharacter(String player) {
-	    if (getCharacterType().equalsIgnoreCase("WARRIOR")) {Warrior player = new Warrior(player, 120, 60);}
-	    if (getCharacterType().equalsIgnoreCase("MAGE"))    {Mage player = new Mage(player, 90, 90);}
-	    if (getCharacterType().equalsIgnoreCase("TITAN"))   {Titan player = new Titan(player, 140, 35);}
+	    if (getCharacterType().equalsIgnoreCase("MAGE")) {Mage player = new Mage(player, 90, 90, 90, 90, 5, 15);}
+	    if (getCharacterType().equalsIgnoreCase("TITAN")) {Titan player = new Titan(player, 140, 140, 40, 40, 5, 20);}
+	    else {Warrior player = new Warrior(player, 120, 120, 60, 60, 8, 18);}
 	}
 
 	void rematchOrQuit() {
