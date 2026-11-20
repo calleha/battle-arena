@@ -7,39 +7,31 @@ public class Main {
     
     public static void main(String[] args) {
 
-	initialisePlayer();
-
+	System.out.print("Write the name of your character: ");
+	String name = scanner.nextLine();
+	
 	do {
-	    choosePlayerCharacter();
-	    initialiseGame();
+	    System.out.println("Choose your character: WARRIOR (default) | MAGE | TITAN");
+	    String type = scanner.nextLine();
+	    GameCharacter player = GameHandler.create(type, name);
+
+	    GameCharacter computer = GameHandler.create(computerChoice(), "Computer");
+	    Game game = new Game(player, computer, scanner);
+	    game.start();
+	    
 	    //printResult(); // TODO: Track score between games
 	    //saveResult();  // TODO: Append score to file
+	    
 	    System.out.print("Begin new game? (Y/n) ");
 	} while (!scanner.nextLine().equalsIgnoreCase("n"));
     }
 
-	
-    public static void initialisePlayer() {
-	System.out.print("Write the name of your character: ");
-	String name = scanner.nextLine();
-    }
-
-    public static void choosePlayerCharacter() {
-	System.out.println("Choose your character: WARRIOR (default) | MAGE | TITAN");
-	String type = scanner.nextLine();
-	GameCharacter player = GameHandler.create(type, name);
-    }
-
-    public static void initialiseGame() {
-	GameCharacter computer = GameHandler.create(computerChoice(), "Computer");
-	Game game = new Game(player, computer, scanner);
-	game.start();
-    }
-
     public static String computerChoice() {
 	int computerChoice = random.nextInt(3);
-	if (computerChoice == 0) { return "WARRIOR"; }
-	if (computerChoice == 1) { return "MAGE"; }
-	if (computerChoice == 2) { return "TITAN"; }
+	return switch (computerChoice) {
+	    case 1 -> "MAGE";
+	    case 2 -> "TITAN";
+	    default -> "WARRIOR";
+	};
     }
 }

@@ -20,22 +20,23 @@ public class Game {
 
 
     public void start() {
-        playerTurn = random.nextBoolean();
+        isPlayerTurn = random.nextBoolean();
 	roundCount = 1;
         gameLoop();
     }
 
     public void gameLoop() {
         while (player.isAlive() && computer.isAlive()) {
-            if (isPlayerTurn) playerTurn(); else computerTurn();
-	    playerTurn = !playerTurn;
+            if (isPlayerTurn) { playerTurn(); playerTurn(); }
+	    else { computerTurn(); computerTurn(); }
+	    isPlayerTurn = !isPlayerTurn;
 	    roundCount++;
 	}
-	System.out.println(getWinner().getPlayerName() + " wins!");
+	System.out.println(getWinner().getName() + " wins!");
     }
 
     public void playerTurn() {
-        System.out.println("Your HP:" + player.getHp() + "| Computer HP: " + computer.getHp() + "\nChoose your action:\n1. Attack\n2. Heal\n3. Special");
+        System.out.println("\nYour HP: " + player.getHp() + " | Computer HP: " + computer.getHp() + "\nYour MP: " + player.getMp() + " | Computer MP: " + computer.getMp() + "\n\nChoose your action:\n1. Attack\n2. Heal\n3. Special");
         String action = input.nextLine();
 
 	switch (action) {

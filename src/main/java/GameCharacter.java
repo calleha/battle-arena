@@ -21,8 +21,8 @@ public abstract class GameCharacter implements SkillTypes {
 	this.maxDamage     = maxDamage;
     }
 
-    public String getName()                              { return playerName; }
-    public void   setName(String playerName)             { this.playerName = playerName; }
+    public String getName()                              { return name; }
+    public void   setName(String name)                   { this.name = name; }
     public String getCharacterType()                     { return characterType; }
     public void   setCharacterType(String characterType) { this.characterType = characterType; }
     public int    getMinDamage()                         { return minDamage; }
@@ -43,14 +43,14 @@ public abstract class GameCharacter implements SkillTypes {
     public void basicAttack(GameCharacter user, GameCharacter target) {
 	int damage = random.nextInt(user.getMinDamage(), user.getMaxDamage() + 1);
 	target.setHp(target.getHp() - damage);
-	System.out.println(user.getPlayerName() + " hits for " + damage + " damage!");
+	System.out.println(user.getName() + " hits for " + damage + " damage!");
     }
 
-    protected void healWithCost(Character user, int cost, int amount) {
+    protected void healWithCost(GameCharacter user, int cost, int amount) {
     if (user.getMp() >= cost) {
         user.setHp(user.getHp() + amount);
         user.setMp(user.getMp() - cost);
-    } else System.out.println("Not enough MP!");
+    } else System.out.println(user.getName() + " doesn't have enough MP!");
 }
 
     public boolean isAlive() {
