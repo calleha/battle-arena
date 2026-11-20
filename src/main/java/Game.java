@@ -7,14 +7,12 @@ public class Game {
     private GameCharacter computer;
     private boolean isPlayerTurn;
     private int roundCount;
-    //private boolean isRunning;
     private Scanner input;
     Random random = new Random();
     
     public Game(GameCharacter player, GameCharacter computer, Scanner input) {
 	this.player = player;
 	this.computer = computer;
-	//this.isRunning = false;
 	this.input = input;
     }
 
@@ -67,11 +65,6 @@ public class Game {
     public GameCharacter getWinner() {
         return player.isAlive() ? player : computer;
     }
-
-    //private int GetInitialStartingTurn() {
-    //    int turn = random.nextInt(2);
-    //    return turn;
-    //}
 
     private boolean getIsPlayerTurn() {
         return isPlayerTurn;
