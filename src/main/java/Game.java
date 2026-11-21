@@ -1,5 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Game {
 
@@ -25,8 +27,8 @@ public class Game {
 
     public void gameLoop() {
         while (player.isAlive() && computer.isAlive()) {
-            if (isPlayerTurn) { playerTurn(); playerTurn(); }
-	    else { computerTurn(); computerTurn(); }
+            if (isPlayerTurn) { playerTurn(); if (player.isAlive() && computer.isAlive()) playerTurn(); }
+	    else { computerTurn(); if (player.isAlive() && computer.isAlive()) computerTurn(); }
 	    isPlayerTurn = !isPlayerTurn;
 	    roundCount++;
 	}
@@ -34,9 +36,12 @@ public class Game {
     }
 
     public void playerTurn() {
-        System.out.println("\nYour HP: " + player.getHp() + " | Computer HP: " + computer.getHp() + "\nYour MP: " + player.getMp() + " | Computer MP: " + computer.getMp() + "\n\nChoose your action:\n1. Attack\n2. Heal\n3. Special");
+        System.out.println("\nYour HP: " + player.getHp() + " | Computer HP: " + computer.getHp() +
+			   "\nYour MP: " + player.getMp() + " | Computer MP: " + computer.getMp() +
+			   "\n\nChoose your action:\n1. Attack (default)\n2. Heal (" + player.getHealCost() +
+			   " MP)\n3. Special (" + player.getSpecialCost() + " MP)");
+	
         String action = input.nextLine();
-
 	switch (action) {
 	    case "2" -> player.heal(player);
 	    case "3" -> player.specialMove(player, computer);
@@ -45,17 +50,17 @@ public class Game {
     }
 
     public void computerTurn() {
-        int computerChoice = random.nextInt(3);
-
-        if (computerChoice == 0) {
-            computer.basicAttack(computer, player);
-	} else if (computerChoice == 1) {
-	    computer.heal(computer);
-        } else if (computerChoice == 2) {
-            computer.specialMove(computer, player);
-        } else {
-            System.out.println("An error has occured");
-        }
+	List<Integer> options = new ArrayList<>();
+	options.add(0);
+	if (computer.canHeal() && computer.getHp() < computer.getMaxHp()) options.add(1);
+	if (computer.canSpecial()) options.add(2);
+	
+        int computerChoice = options.get(random.nextInt(options.size()));
+	switch (computerChoice) {
+	    case 0   -> computer.basicAttack(computer, player);
+	    case 1   -> computer.heal(computer);
+	    default  -> computer.specialMove(computer, player);
+	}
     }
 
     public boolean isGameOver() {
@@ -66,7 +71,7 @@ public class Game {
         return player.isAlive() ? player : computer;
     }
 
-    private boolean getIsPlayerTurn() {
+    public boolean getIsPlayerTurn() {
         return isPlayerTurn;
     }
 

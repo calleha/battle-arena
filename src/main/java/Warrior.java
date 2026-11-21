@@ -8,12 +8,14 @@ public class Warrior extends GameCharacter {
 	    target.setMaxDamage(target.getMaxDamage() - 3);
 	    user.setMp(user.getMp() - 20);
 	    System.out.println(target.getName() + "'s max damage decreased by 3!");
-	}
-	else {System.out.println(user.getName() + " doesn't have enough MP!");}
+	} else System.out.println(user.getName() + " doesn't have enough MP!");
     }
 
-    @Override public void heal(GameCharacter user) { healWithCost(user, 40, 30); }
+    @Override public void heal(GameCharacter user) { healWithCost(user, getHealCost(), 30); }
 
     @Override
     public void specialMove(GameCharacter user, GameCharacter target) { attackDebuff(user, target); }
+
+    @Override public int getHealCost()    { return 40; }
+    @Override public int getSpecialCost() { return 20; }
 }
