@@ -12,8 +12,6 @@ public class Mage extends GameCharacter {
 	} else System.out.println(user.getName() + " doesn't have enough MP!");
     }
 
-    @Override public void heal(GameCharacter user) { healWithCost(user, getHealCost(), 30); }
-
     @Override
     public void specialMove(GameCharacter user, GameCharacter target) { magicAttack(user, target); }
 

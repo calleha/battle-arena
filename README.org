@@ -1,14 +1,26 @@
 * Battle Arena
 This is simple turn-based battle game between the player and the computer, for a school project.
 
+* Build and run
+
+#+begin_src sh
+  mvn package
+  java -cp target/battle-arena-{version}.jar Main
+#+end_src
+
+
 Below is a todo-list of features to be added.
 
-** TODO Maybe move heal method to GameCharacter and make it shared across characters, since getHealCost() overrides for each character
+** DONE Maybe move heal method to GameCharacter and make it shared across characters, since getHealCost() overrides for each character
+** TODO Move computerChoice() from Main to GameHandler
+** TODO Change characterType strins to Enum
 ** TODO Write unit tests for methods
-** TODO Add color output
-** TODO Add sound effects
+** TODO Implement Save functionality -> FileHandler
+** TODO Implement Server-Client functionality -> Server, Client, ClientHandler
+** TODO Add color output -> Cosmetic
+** TODO Add sound effects -> Cosmetic
 ** TODO Add license
-
+** TODO Refactor code
 
 * Plan
 
@@ -16,20 +28,27 @@ Klasser:
 
 ** Main
 
-** Character
+** GameCharacter
 *** Mage
 *** Warrior
 *** Titan
 
 ** Interface: SkillTypes
 
-** Enum: ActionType
+** Enum: GameCharacterType
 
 ** GameHandler
 
-** ResultHandler
+** Game
 
-** SaveHandler
+** MatchResult
+
+** FileHandler
+
+** Cosmetic
 
 ** Server
-*** Client
+
+** Client
+
+** ClientHandler

@@ -59,6 +59,7 @@ public abstract class GameCharacter implements SkillTypes {
 	System.out.println(user.getName() + " heals by " + amount + " HP!");
     } else System.out.println(user.getName() + " doesn't have enough MP!");
 }
+    @Override public void heal(GameCharacter user) { healWithCost(user, getHealCost(), 30); }
 
     public boolean isAlive() {
         return hp > 0;
