@@ -81,4 +81,8 @@ public class Game {
         return isPlayerTurn;
     }
 
+    public int getRoundCount() {
+	return roundCount;
+    }
+
 }

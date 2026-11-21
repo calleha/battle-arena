@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.IOException;
 import java.util.Random;
 
 public class Main {
@@ -7,12 +8,12 @@ public class Main {
     
     public static void main(String[] args) {
 
+	try { Server server = new Server(5000); server.start(); }
+	catch (IOException e) { System.err.println("Could not start server: " + e.getMessage()); }
+	Client client = new Client("localhost", 5000);
+
 	System.out.print("Write the name of your character: ");
 	String name = scanner.nextLine();
-
-	Server server = new Server(5000);
-	server.start();
-	Client client = new Client("localhost", 5000);
 
 	do {
 	    System.out.println("Choose your character: WARRIOR (default) | MAGE | TITAN");
@@ -23,14 +24,18 @@ public class Main {
 	    Game game = new Game(player, computer, scanner);
 	    game.start();
 
-	    client.sendResult();
-	    //printResult(); // TODO: Track score between games
-	    //FileHandler.saveMatch();  // TODO: Append score to file
+	    MatchResult result = new MatchResult(
+		name, player.getCharacterType(), computer.getCharacterType(),
+		game.getWinner().getName(), game.getRoundCount());
+	    client.sendResult(result);
+	    System.out.println(result.toCsv());
 	    
 	    System.out.print("Begin new game? (Y/n) ");
 	} while (!scanner.nextLine().equalsIgnoreCase("n"));
-    }
 
+	FileHandler.readHistory();
+    }
+    
     public static String computerChoice() {
 	int computerChoice = random.nextInt(3);
 	return switch (computerChoice) {

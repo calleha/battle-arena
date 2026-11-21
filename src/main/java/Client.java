@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -10,14 +13,17 @@ public class Client {
 	this.port = port;
     }
     
-    public static void sendResult(MatchResult result) {
+    public void sendResult(MatchResult result) {
 	try (Socket socket = new Socket(serverAddress, port)) {
 
-	    //BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-	    out.println(result);
+	    out.println(result.toCsv());
+	    in.readLine();
 
-	} catch (IOException e) { e.printStackTrace(); }
+	} catch (IOException e) {
+	    System.err.println("Could not send result: " + e.getMessage());
+	}
     }
 }
