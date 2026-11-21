@@ -27,21 +27,25 @@ public class Game {
 
     public void gameLoop() {
         while (player.isAlive() && computer.isAlive()) {
-            if (isPlayerTurn) { playerTurn(); if (player.isAlive() && computer.isAlive()) playerTurn(); }
+            if (isPlayerTurn) { playerTurn(); if (player.isAlive() && computer.isAlive()) playerTurn2(); }
 	    else { computerTurn(); if (player.isAlive() && computer.isAlive()) computerTurn(); }
 	    isPlayerTurn = !isPlayerTurn;
-	    roundCount++;
 	}
 	System.out.println(getWinner().getName() + " wins!");
     }
 
     public void playerTurn() {
-        System.out.println("\nYour HP: " + player.getHp() + " | Computer HP: " + computer.getHp() +
-			   "\nYour MP: " + player.getMp() + " | Computer MP: " + computer.getMp() +
+        System.out.println("\n------------Round " + roundCount + "------------" +
 			   "\n\nChoose your action:\n1. Attack (default)\n2. Heal (" + player.getHealCost() +
 			   " MP)\n3. Special (" + player.getSpecialCost() + " MP)");
-	
-        String action = input.nextLine();
+	playerTurn2();
+	roundCount++;
+    }
+
+    public void playerTurn2() {
+	System.out.println("\nYour HP: " + player.getHp() + "  Computer HP: " + computer.getHp() +
+			   "\nYour MP: " + player.getMp() + "  Computer MP: " + computer.getMp());
+	String action = input.nextLine();
 	switch (action) {
 	    case "2" -> player.heal(player);
 	    case "3" -> player.specialMove(player, computer);
@@ -54,6 +58,8 @@ public class Game {
 	options.add(0);
 	if (computer.canHeal() && computer.getHp() < computer.getMaxHp()) options.add(1);
 	if (computer.canSpecial()) options.add(2);
+
+	try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
 	
         int computerChoice = options.get(random.nextInt(options.size()));
 	switch (computerChoice) {

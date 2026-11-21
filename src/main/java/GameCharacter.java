@@ -56,7 +56,7 @@ public abstract class GameCharacter implements SkillTypes {
     if (user.getMp() >= cost) {
         user.setHp(user.getHp() + amount);
         user.setMp(user.getMp() - cost);
-	System.out.println(user.getName() + " heals for " + amount + " HP!");
+	System.out.println(user.getName() + " heals by " + amount + " HP!");
     } else System.out.println(user.getName() + " doesn't have enough MP!");
 }
 
