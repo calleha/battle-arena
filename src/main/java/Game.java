@@ -27,8 +27,8 @@ public class Game {
 
     public void gameLoop() {
         while (player.isAlive() && computer.isAlive()) {
-            if (isPlayerTurn) { playerTurn(); if (computer.isAlive()) playerTurn2(); }
-	    else { computerTurn(); if (player.isAlive()) computerTurn(); }
+            if (isPlayerTurn) { playerTurn(); if (computer.isAlive()) playerTurn2(); turnWait(); }
+	    else { computerTurn(); turnWait(); if (player.isAlive()) computerTurn(); turnWait(); }
 	    isPlayerTurn = !isPlayerTurn;
 	}
 	System.out.println(getWinner().getName() + " wins!");
@@ -58,8 +58,6 @@ public class Game {
 	options.add(0);
 	if (computer.canHeal() && computer.getHp() < computer.getMaxHp()) options.add(1);
 	if (computer.canSpecial()) options.add(2);
-
-	try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
 	
         int computerChoice = options.get(random.nextInt(options.size()));
 	switch (computerChoice) {
@@ -67,6 +65,10 @@ public class Game {
 	    case 1   -> computer.heal(computer);
 	    default  -> computer.specialMove(computer, player);
 	}
+    }
+
+    public void turnWait() {
+	try { Thread.sleep(500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
 
     public boolean isGameOver() {
