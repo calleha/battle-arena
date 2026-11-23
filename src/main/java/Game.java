@@ -27,8 +27,8 @@ public class Game {
 
     public void gameLoop() {
         while (player.isAlive() && computer.isAlive()) {
-            if (isPlayerTurn) { playerTurn(); if (computer.isAlive()) playerTurn2(); turnWait(); }
-	    else { computerTurn(); turnWait(); if (player.isAlive()) computerTurn(); turnWait(); }
+            if (isPlayerTurn) { playerTurn(); if (computer.isAlive()) { playerTurn2(); } turnWait(); }
+	    else { computerTurn(); turnWait(); if (player.isAlive()) { computerTurn(); turnWait(); }}
 	    isPlayerTurn = !isPlayerTurn;
 	}
 	System.out.println(getWinner().getName() + " wins!");
