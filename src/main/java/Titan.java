@@ -5,15 +5,15 @@ public class Titan extends GameCharacter {
 
     private void attackBuff(GameCharacter user) {
 	if (user.getMp() >= 20) {
-	    user.setMaxDamage(user.getMaxDamage() + 2);
+	    user.setMaxDamage(user.getMaxDamage() + 4);
 	    user.setMp(user.getMp() - 20);
-	    System.out.println(user.getName() + "'s max damage increased by 2!");
-	}
-	else {System.out.println(user.getName() + " doesn't have enough MP!");}
+	    System.out.println(user.getName() + "'s max damage increased by 4!");
+	} else System.out.println(user.getName() + " doesn't have enough MP!");
     }
-
-    @Override public void heal(GameCharacter user) { healWithCost(user, 40, 30); }
 
     @Override
     public void specialMove(GameCharacter user, GameCharacter target) { attackBuff(user); }
+
+    @Override public int getHealCost()    { return 40; }
+    @Override public int getSpecialCost() { return 20; }
 }

@@ -3,13 +3,25 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    private int port;
+    private final int port;
 
-    public Server(int port) {
-        this.port = port;
+    public Server(int port) { this.port = port; }
+    
+    public void start() throws IOException {
+        ServerSocket serverSocket = new ServerSocket(port);
+	Thread serverThread = new Thread(() -> acceptLoop(serverSocket));
+	serverThread.setDaemon(true);
+	serverThread.start();
     }
 
-    public void start() {
-        // TODO: Starta ServerSocket och acceptera klienter i trådar
+    private void acceptLoop(ServerSocket serverSocket) {
+	try (serverSocket) {
+	    while (true) {
+		Socket socket = serverSocket.accept();
+		Thread.startVirtualThread(new ClientHandler(socket));
+	    }
+	} catch (IOException e) {
+	    System.err.println("Server error: " + e.getMessage());
+	}
     }
 }

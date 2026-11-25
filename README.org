@@ -1,37 +1,55 @@
 * Battle Arena
 This is simple turn-based battle game between the player and the computer, for a school project.
 
+* Build and run
+
+#+begin_src sh
+  mvn package
+  java -cp target/battle-arena-{version}.jar Main
+#+end_src
+
+
 Below is a todo-list of features to be added.
 
-** DONE Write game logic to a BattleService.java and make the program able to run
-** DONE Write user menu to Main.java
-* TODO When the player/computer doesn't have enough MP for an action, give them another turn
-** TODO Write unit tests for methods
-** TODO Add color output
-** TODO Add sound effects
-** TODO Add license
+* Important TODOs
+** TODO Move computerChoice() from Main to GameHandler
+** TODO Change characterType strings to Enum
+** TODO Write unit tests for game methods
+** TODO Write unit tests for Server-Client communication
 
+* Low priority TODOs
+** TODO Add color output -> Cosmetic
+** TODO Add sound effects -> Cosmetic
+** TODO Add license
+** TODO Refactor code
 
 * Plan
 
-Klasser:
+Classes:
 
 ** Main
 
-** Character
+** GameCharacter
 *** Mage
 *** Warrior
 *** Titan
 
 ** Interface: SkillTypes
 
-** Enum: ActionType
+** Enum: GameCharacterType
 
 ** GameHandler
 
-** ResultHandler
+** Game
 
-** SaveHandler
+** MatchResult
+
+** FileHandler
+
+** Cosmetic
 
 ** Server
-*** Client
+
+** Client
+
+** ClientHandler

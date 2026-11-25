@@ -9,6 +9,9 @@ public abstract class GameCharacter implements SkillTypes {
     private int    maxHp;
     private int    mp;
     private int    maxMp;
+
+    public abstract int getHealCost();
+    public abstract int getSpecialCost();
     
     public GameCharacter(String name, String characterType, int hp, int maxHp, int mp, int maxMp, int minDamage, int maxDamage) {
 	this.name          = name;
@@ -36,7 +39,10 @@ public abstract class GameCharacter implements SkillTypes {
     public int    getMaxHp()                             { return maxHp; }
     public void   setMaxHp(int maxHp)                    { this.maxHp = maxHp; }
     public int    getMaxMp()                             { return maxMp; }
-    public void   setMaxMp(int maxMp)                    { this.maxMp = maxMp; }
+    public void   setMaxMp(int maxMp)                    { this.maxMp = maxMp; } 
+
+    public boolean canHeal()                             { return mp >= getHealCost(); }
+    public boolean canSpecial()                          { return mp >= getSpecialCost(); }
 
     Random random = new Random();
     @Override
@@ -50,8 +56,10 @@ public abstract class GameCharacter implements SkillTypes {
     if (user.getMp() >= cost) {
         user.setHp(user.getHp() + amount);
         user.setMp(user.getMp() - cost);
+	System.out.println(user.getName() + " heals by " + amount + " HP!");
     } else System.out.println(user.getName() + " doesn't have enough MP!");
 }
+    @Override public void heal(GameCharacter user) { healWithCost(user, getHealCost(), 30); }
 
     public boolean isAlive() {
         return hp > 0;
