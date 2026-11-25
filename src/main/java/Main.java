@@ -35,11 +35,6 @@ public class Main {
 	} while (!scanner.nextLine().equalsIgnoreCase("n"));
 
 	FileHandler.showHistory();
-	//List<String> matchHistory = FileHandler.readHistory();
-	//for (String line : matchHistory) {
-	//    System.out.println(line);
-	//}
-	//System.out.println(FileHandler.readHistory());
     }
     
     public static String computerChoice() {
