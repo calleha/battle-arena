@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.Random;
+import java.util.List;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
@@ -28,12 +29,17 @@ public class Main {
 		name, player.getCharacterType(), computer.getCharacterType(),
 		game.getWinner().getName(), game.getRoundCount());
 	    client.sendResult(result);
-	    System.out.println(result.toCsv());
+	    System.out.println(result.toString());
 	    
 	    System.out.print("Begin new game? (Y/n) ");
 	} while (!scanner.nextLine().equalsIgnoreCase("n"));
 
-	FileHandler.readHistory();
+	FileHandler.showHistory();
+	//List<String> matchHistory = FileHandler.readHistory();
+	//for (String line : matchHistory) {
+	//    System.out.println(line);
+	//}
+	//System.out.println(FileHandler.readHistory());
     }
     
     public static String computerChoice() {
