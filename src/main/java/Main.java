@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.Random;
-import java.util.List;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
