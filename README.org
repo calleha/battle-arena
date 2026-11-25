@@ -11,13 +11,13 @@ This is simple turn-based battle game between the player and the computer, for a
 
 Below is a todo-list of features to be added.
 
-** DONE Maybe move heal method to GameCharacter and make it shared across characters, since getHealCost() overrides cost for each character
+* Important TODOs
 ** TODO Move computerChoice() from Main to GameHandler
 ** TODO Change characterType strings to Enum
 ** TODO Write unit tests for game methods
-** DONE Implement Save functionality -> FileHandler
-** DONE Implement Server-Client functionality -> Server, Client, ClientHandler
-** TODO Write unit tests for Server-Client communication + file handling, since something is broken there
+** TODO Write unit tests for Server-Client communication
+
+* Low priority TODOs
 ** TODO Add color output -> Cosmetic
 ** TODO Add sound effects -> Cosmetic
 ** TODO Add license
