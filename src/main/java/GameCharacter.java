@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public abstract class GameCharacter implements SkillTypes {
+
     private String name;
     private String characterType;
     private int    minDamage;
@@ -10,26 +11,25 @@ public abstract class GameCharacter implements SkillTypes {
     private int    mp;
     private int    maxMp;
 
-    public abstract int getHealCost();
-    public abstract int getSpecialCost();
-    
+    Random random = new Random();
+
     public GameCharacter(String name, String characterType, int hp, int maxHp, int mp, int maxMp, int minDamage, int maxDamage) {
-	this.name          = name;
-	this.characterType = characterType;
-	this.hp            = hp;
-	this.maxHp         = maxHp;
-	this.mp            = mp;
-	this.maxMp         = maxMp;
-	this.minDamage     = minDamage;
-	this.maxDamage     = maxDamage;
+        this.name          = name;
+        this.characterType = characterType;
+        this.hp            = hp;
+        this.maxHp         = maxHp;
+        this.mp            = mp;
+        this.maxMp         = maxMp;
+        this.minDamage     = minDamage;
+        this.maxDamage     = maxDamage;
     }
 
+    public abstract int getHealCost();
+    public abstract int getSpecialCost();
+
     public String getName()                              { return name; }
-    public void   setName(String name)                   { this.name = name; }
     public String getCharacterType()                     { return characterType; }
-    public void   setCharacterType(String characterType) { this.characterType = characterType; }
     public int    getMinDamage()                         { return minDamage; }
-    public void   setMinDamage(int minDamage)            { this.minDamage = minDamage; }
     public int    getMaxDamage()                         { return maxDamage; }
     public void   setMaxDamage(int maxDamage)            { this.maxDamage = Math.max(minDamage, maxDamage); }
     public int    getHp()                                { return hp; }
@@ -37,29 +37,51 @@ public abstract class GameCharacter implements SkillTypes {
     public int    getMp()                                { return mp; }
     public void   setMp(int mp)                          { this.mp = Math.max(0, Math.min(mp, maxMp)); }
     public int    getMaxHp()                             { return maxHp; }
+
+    //ta bort??
+    public void   setMinDamage(int minDamage)            { this.minDamage = minDamage; }
+    public void   setCharacterType(String characterType) { this.characterType = characterType; }
+    public void   setName(String name)                   { this.name = name; }
     public void   setMaxHp(int maxHp)                    { this.maxHp = maxHp; }
     public int    getMaxMp()                             { return maxMp; }
-    public void   setMaxMp(int maxMp)                    { this.maxMp = maxMp; } 
+    public void   setMaxMp(int maxMp)                    { this.maxMp = maxMp; }
 
     public boolean canHeal()                             { return mp >= getHealCost(); }
     public boolean canSpecial()                          { return mp >= getSpecialCost(); }
 
-    Random random = new Random();
+    // ---------- Skills ----------
+
     @Override
     public void basicAttack(GameCharacter user, GameCharacter target) {
-	int damage = random.nextInt(user.getMinDamage(), user.getMaxDamage() + 1);
-	target.setHp(target.getHp() - damage);
-	System.out.println(user.getName() + " hits for " + damage + " damage!");
+        int damage = random.nextInt(user.getMinDamage(), user.getMaxDamage() + 1);
+        target.setHp(target.getHp() - damage);
+
+        //added sound effects
+        SoundManager.playBasicAttack();
+
+        System.out.println(TextColor.GREEN + user.getName() + TextColor.YELLOW + " hits for " +
+                           TextColor.RED + damage + TextColor.YELLOW + " damage!" + TextColor.RESET);
     }
 
     protected void healWithCost(GameCharacter user, int cost, int amount) {
-    if (user.getMp() >= cost) {
-        user.setHp(user.getHp() + amount);
-        user.setMp(user.getMp() - cost);
-	System.out.println(user.getName() + " heals by " + amount + " HP!");
-    } else System.out.println(user.getName() + " doesn't have enough MP!");
-}
-    @Override public void heal(GameCharacter user) { healWithCost(user, getHealCost(), 30); }
+        if (user.getMp() >= cost) {
+            user.setHp(user.getHp() + amount);
+            user.setMp(user.getMp() - cost);
+
+            //added sound effects
+            SoundManager.playHeal();
+
+            System.out.println(TextColor.GREEN + user.getName() + TextColor.YELLOW + " heals by " +
+                               TextColor.GREEN + amount + " HP" + TextColor.YELLOW + "!" + TextColor.RESET);
+        } else {
+            System.out.println(TextColor.GREEN + user.getName() + TextColor.RED + " doesn't have enough MP!" + TextColor.RESET);
+        }
+    }
+
+    @Override
+    public void heal(GameCharacter user) {
+        healWithCost(user, getHealCost(), 30);
+    }
 
     public boolean isAlive() {
         return hp > 0;

@@ -14,18 +14,22 @@ public class MatchResult {
     }
 
     public String toCsv() {
-	return String.join(",", clean(playerName), playerCharacter, computerCharacter,
-			   clean(winnerName), String.valueOf(rounds));
+        return String.join(",", clean(playerName), playerCharacter, computerCharacter,
+                           clean(winnerName), String.valueOf(rounds));
     }
 
     public static MatchResult fromCsv(String line) {
-	String[] values = line.split(";", -1);
-	if (values.length != 5) throw new IllegalArgumentException("Bad Line: " + line);
-	return new MatchResult(values[0], values[1], values[2], values[3], Integer.parseInt(values[4]));
+        String[] values = line.split(";", -1);
+        if (values.length != 5) throw new IllegalArgumentException("Bad Line: " + line);
+        return new MatchResult(values[0], values[1], values[2], values[3], Integer.parseInt(values[4]));
     }
 
-    private static String clean(String s) { return s.replace(";", ","); }
+    private static String clean(String s) {
+        return s.replace(";", ",");
+    }
 
+
+    //onödiga metoder?
     public String getPlayerName()        { return playerName; }
     public String getPlayerCharacter()   { return playerCharacter; }
     public String getComputerCharacter() { return computerCharacter; }
